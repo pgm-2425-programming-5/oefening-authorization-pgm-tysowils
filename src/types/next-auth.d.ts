@@ -1,6 +1,7 @@
 // types/next-auth.d.ts
 
 import NextAuth from "next-auth";
+import { Roles } from "./Roles";
 
 declare module "next-auth" {
   interface Session {
@@ -8,7 +9,7 @@ declare module "next-auth" {
       id: number;
       name?: string | null;
       email?: string | null;
-      role: "user" | "admin";
+      role: Roles;
     };
   }
 
@@ -16,6 +17,6 @@ declare module "next-auth" {
     id: number;
     name?: string | null;
     email?: string | null;
-    role: "user" | "admin";
+    role: Roles;
   }
 }

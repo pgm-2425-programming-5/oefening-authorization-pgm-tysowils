@@ -4,6 +4,7 @@ import GitHubProvider from "next-auth/providers/github";
 // import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { users } from "./users";
+import { Roles } from "@/types/Roles";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -32,7 +33,12 @@ export const authOptions: NextAuthOptions = {
           const isValid = await bcrypt.compare(password, user.password);
           console.log("Password is valid:", isValid);
           if (isValid) {
-            return { id: user.id, name: user.name, email: user.email, role: user.role };
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.role,
+            };
           }
         }
 
@@ -71,7 +77,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as number;
-        session.user.role = token.role as "admin" | "user";
+        session.user.role = token.role as Roles;
       }
       // to copy the the whole token to the session
       // session.user = {
